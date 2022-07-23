@@ -37,10 +37,12 @@ const QueenResultsDisplay = (props) => {
 }
 
 const sortCardValue = (card1, card2) => {
-	if (card1.value < card2.value) {
+	let cardOrder = ['ACE', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'JACK', 'QUEEN', 'KING'];
+
+	if (cardOrder.indexOf(card1.value) < cardOrder.indexOf(card2.value)) {
 	  return -1;
 	}
-	if (card1.value > card2.value) {
+	if (cardOrder.indexOf(card1.value) > cardOrder.indexOf(card2.value)) {
 	  return 1;
 	}
 	return 0;
