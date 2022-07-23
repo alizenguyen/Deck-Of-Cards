@@ -8,24 +8,25 @@ const starter = {
 	diamonds: [],
 };
 
-function Cards(props) {
+const Cards = (props) => {
 	return (
 		<div>
-		<p>{props.suit}</p>
-		{props.cards.map((card, index) => {
-			return (
-				<CardImage image={card.image} key={card.value} />
-			)
-		})}
+			<p>{props.suit}</p>
+			{props.cards.map((card, index) => {
+				return (
+					<CardImage image={card.image} key={card.value} />
+				)
+			})}
 		</div>
 	)
 }
 
-function CardImage(props) {
+const CardImage = (props) => {
 	return <img className="card-image" src={props.image} alt={props.image} />
 }
 
-function QueenResultsDisplay(props) {
+const QueenResultsDisplay = (props) => {
+	console.log(props.queenCount)
 	if (props.queenCount < 4) {
 		if (props.manual) {
 			return <button className="draw-btn" onClick={props.drawCards}>Draw Cards</button>
@@ -35,7 +36,7 @@ function QueenResultsDisplay(props) {
 	}
 }
 
-function sortCardValue(card1, card2) {
+const sortCardValue = (card1, card2) => {
 	if (card1.value < card2.value) {
 	  return -1;
 	}
@@ -45,29 +46,12 @@ function sortCardValue(card1, card2) {
 	return 0;
 }
 
-function Deck() {
+const Deck = () => {
 	const [deckInfo, updateDeckInfo] = useState();
 	const [deck, updateDeck] = useState(starter);
 	const [queenCount, updateQueenCount] = useState(0);
 	const [manual, switchToManualPull] = useState(false);
 	const timer = useRef(null);
-
-	useEffect(() => {
-		async function getDeck() {
-			const url = 'http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1';
-			const response = await fetch(url);
-			const data = await response.json();
-			updateDeckInfo(data);
-		}
-
-		getDeck();
-
-		return () => clearInterval(timer.current);
-	}, []);
-
-	const stopTimer = () => {
-		clearInterval(timer.current);
-	};
 
 	const drawCards = useCallback(async () => {
 		const url = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/draw/?count=2`;
@@ -99,20 +83,6 @@ function Deck() {
 		} 
 	}, [deckInfo, queenCount]);
 
-	useEffect(() => {
-		timer.current = setInterval(() => {
-			drawCards();
-		}, 1000);
-
-		return () => clearInterval(timer.current);
-	}, [deckInfo, drawCards]);
-
-	useEffect(() => {
-		if (queenCount === 4) {
-			stopTimer();
-		}
-	}, [queenCount]);
-
 	const resetCards = async () => {
 		stopTimer();
 		
@@ -129,12 +99,44 @@ function Deck() {
 			updateDeck(starter);
 			updateQueenCount(0);
 		}
-	}
+	};
 
 	const switchToManual = () => {
-		stopTimer();
 		switchToManualPull(true);
-	}
+	};
+
+	const stopTimer = () => {
+		clearInterval(timer.current);
+	};
+
+	useEffect(() => {
+		async function getDeck() {
+			const url = 'http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1';
+			const response = await fetch(url);
+			const data = await response.json();
+			updateDeckInfo(data);
+		}
+
+		getDeck();
+
+		return () => clearInterval(timer.current);
+	}, []);
+
+	useEffect(() => {
+		if (!manual) {
+			timer.current = setInterval(() => {
+				drawCards();
+			}, 1000);
+		}
+
+		return () => clearInterval(timer.current);
+	}, [deckInfo, manual, drawCards]);
+
+	useEffect(() => {
+		if (queenCount === 4 || manual) {
+			stopTimer();
+		}
+	}, [queenCount, manual]);
 
 	return (
 		<div className="Deck">
