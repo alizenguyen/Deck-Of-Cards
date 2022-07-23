@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import './Deck.css';
 
 const starter = {
@@ -48,11 +48,8 @@ function Deck() {
 	const [deckInfo, updateDeckInfo] = useState({});
 	const [deck, updateDeck] = useState(starter);
 	const [queenCount, updateQueenCount] = useState(0);
-	const isMounted = useRef(false);
 
 	useEffect(() => {
-		if (isMounted.current) return;
-
 		async function getDeck() {
 			const url = 'http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1';
 			const response = await fetch(url);
@@ -61,8 +58,6 @@ function Deck() {
 		}
 
 		getDeck();
-
-		return () => { isMounted.current = true }
 	}, [])
 
 	const drawCards = async () => {
