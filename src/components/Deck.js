@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import './Deck.css';
 
 const starter = {
@@ -9,11 +9,10 @@ const starter = {
 };
 
 function Cards(props) {
-	const cardsSorted = props.cards.sort((a, b) => a.value - b.value);
 	return (
 		<div>
 		<p>{props.suit}</p>
-		{cardsSorted.map((card, index) => {
+		{props.cards.map((card, index) => {
 			return (
 				<CardImage image={card.image} key={card.value} />
 			)
@@ -26,9 +25,11 @@ function CardImage(props) {
 	return <img className="card-image" src={props.image} alt={props.image} />
 }
 
-function QueenTracker(props) {
+function QueenResultsDisplay(props) {
 	if (props.queenCount < 4) {
-		return <button className="draw-btn" onClick={props.drawCards}>Draw Cards</button>
+		if (props.manual) {
+			return <button className="draw-btn" onClick={props.drawCards}>Draw Cards</button>
+		}
 	} else {
 		return <p>Yay, you have found all your queens!</p>
 	}
@@ -45,9 +46,11 @@ function sortCardValue(card1, card2) {
 }
 
 function Deck() {
-	const [deckInfo, updateDeckInfo] = useState({});
+	const [deckInfo, updateDeckInfo] = useState();
 	const [deck, updateDeck] = useState(starter);
 	const [queenCount, updateQueenCount] = useState(0);
+	const [manual, switchToManualPull] = useState(false);
+	const timer = useRef(null);
 
 	useEffect(() => {
 		async function getDeck() {
@@ -58,9 +61,15 @@ function Deck() {
 		}
 
 		getDeck();
-	}, [])
 
-	const drawCards = async () => {
+		return () => clearInterval(timer.current);
+	}, []);
+
+	const stopTimer = () => {
+		clearInterval(timer.current);
+	};
+
+	const drawCards = useCallback(async () => {
 		const url = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/draw/?count=2`;
 		const response = await fetch(url);
 		const data = await response.json();
@@ -88,9 +97,25 @@ function Deck() {
 				});
 			})
 		} 
-	};
+	}, [deckInfo, queenCount]);
+
+	useEffect(() => {
+		timer.current = setInterval(() => {
+			drawCards();
+		}, 1000);
+
+		return () => clearInterval(timer.current);
+	}, [deckInfo, drawCards]);
+
+	useEffect(() => {
+		if (queenCount === 4) {
+			stopTimer();
+		}
+	}, [queenCount]);
 
 	const resetCards = async () => {
+		stopTimer();
+		
 		const returnUrl = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/return/`;
 		const returnResponse = await fetch(returnUrl);
 		const data = await returnResponse.json();
@@ -99,16 +124,23 @@ function Deck() {
 		const shuffleResponse = await fetch(shuffleUrl);
 
 		if (returnResponse.ok && shuffleResponse.ok) {
+			switchToManualPull(false);
 			updateDeckInfo(data);
 			updateDeck(starter);
 			updateQueenCount(0);
 		}
 	}
 
+	const switchToManual = () => {
+		stopTimer();
+		switchToManualPull(true);
+	}
+
 	return (
 		<div className="Deck">
 			<div className="controllers">
-				<QueenTracker drawCards={drawCards} queenCount={queenCount} />
+				<QueenResultsDisplay drawCards={drawCards} queenCount={queenCount} manual={manual} />
+				{!manual && (<button className="manual-btn" onClick={switchToManual}>Manual Draw</button>)}
 				<button onClick={resetCards}>Reset</button>
 			</div>
 			{Object.keys(deck).map((key, index) => {
