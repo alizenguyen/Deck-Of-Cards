@@ -28,7 +28,7 @@ function CardImage(props) {
 
 function QueenTracker(props) {
 	if (props.queenCount < 4) {
-		return <button onClick={props.drawCards}>Draw Cards</button>
+		return <button className="draw-btn" onClick={props.drawCards}>Draw Cards</button>
 	} else {
 		return <p>Yay, you have found all your queens!</p>
 	}
@@ -79,7 +79,7 @@ function Deck() {
 			data.cards.forEach((card) => {
 				const property = card.suit.toLowerCase();
 
-				if (card.value === 'QUEEN') {
+				if (card.value === 'QUEEN' || data.remaining === 0) {
 					updateQueenCount(queenCount+1);
 				}
 
@@ -96,18 +96,26 @@ function Deck() {
 	};
 
 	const resetCards = async () => {
-		const url = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/return/`;
-		const response = await fetch(url);
-		const data = await response.json();
+		const returnUrl = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/return/`;
+		const returnResponse = await fetch(returnUrl);
+		const data = await returnResponse.json();
 
-		updateDeckInfo(data);
-		updateDeck(starter);
+		const shuffleUrl = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/shuffle/`
+		const shuffleResponse = await fetch(shuffleUrl);
+
+		if (returnResponse.ok && shuffleResponse.ok) {
+			updateDeckInfo(data);
+			updateDeck(starter);
+			updateQueenCount(0);
+		}
 	}
 
 	return (
 		<div className="Deck">
-			<QueenTracker drawCards={drawCards} queenCount={queenCount} />
-			<button onClick={resetCards}>Reset</button>
+			<div className="controllers">
+				<QueenTracker drawCards={drawCards} queenCount={queenCount} />
+				<button onClick={resetCards}>Reset</button>
+			</div>
 			{Object.keys(deck).map((key, index) => {
 				return (
 					<Cards suit={key} cards={deck[key]} key={key} />

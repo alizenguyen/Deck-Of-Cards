@@ -1,3 +1,7 @@
 .card-image {
-    height: 100px;
+    height: 80px;
+    margin-right: 20px;
+}
+.draw-btn {
+    margin-right: 15px;
 }

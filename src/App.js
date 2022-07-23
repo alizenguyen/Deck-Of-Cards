@@ -4,12 +4,12 @@ import Deck from './components/Deck.js'
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
+      <div className="App-container">
+        <h1>
           Deck of Cards
-        </p>
+        </h1>
         <Deck />
-      </header>
+      </div>
     </div>
   );
 }
