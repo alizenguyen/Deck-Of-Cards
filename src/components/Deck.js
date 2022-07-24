@@ -26,7 +26,6 @@ const CardImage = (props) => {
 }
 
 const QueenResultsDisplay = (props) => {
-	console.log(props.queenCount)
 	if (props.queenCount < 4) {
 		if (props.manual) {
 			return <button className="draw-btn" onClick={props.drawCards}>Draw Cards</button>
