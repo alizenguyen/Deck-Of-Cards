@@ -55,7 +55,8 @@ const Deck = () => {
 	const timer = useRef(null);
 
 	const drawCards = useCallback(async () => {
-		const url = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/draw/?count=2`;
+        let url = '';
+		url = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/draw/?count=2`;
 		const response = await fetch(url);
 		const data = await response.json();
 
