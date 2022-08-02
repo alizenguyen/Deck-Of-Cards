@@ -55,9 +55,7 @@ const Deck = () => {
 	const timer = useRef(null);
 
 	const drawCards = useCallback(async () => {
-        x = 23;
-        let x;
-        let url = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/draw/?count=2`;
+        const url = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/draw/?count=2`;
 		const response = await fetch(url);
 		const data = await response.json();
 
@@ -93,7 +91,7 @@ const Deck = () => {
 		const returnResponse = await fetch(returnUrl);
 		const data = await returnResponse.json();
 
-		const shuffleUrl = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/shuffle/`
+		const shuffleUrl = `http://deckofcardsapi.com/api/deck/${deckInfo.deck_id}/shuffle/`;
 		const shuffleResponse = await fetch(shuffleUrl);
 
 		if (returnResponse.ok && shuffleResponse.ok) {
