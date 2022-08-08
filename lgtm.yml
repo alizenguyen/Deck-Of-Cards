@@ -10,4 +10,4 @@ extraction:
   javascript:
     index:
       exclude:
-        - src/components/Deck.js
+        - App.js
