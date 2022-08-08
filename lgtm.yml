@@ -56,10 +56,9 @@ extraction:
       # Specify a list of files and folders to extract.
       # Default: The project root directory.
       include:
-        - src/js
+        - src
       # Specify a list of files and folders to exclude from extraction.
       exclude:
-        - thirdparty/lib
         - src/components/Deck.js
       # You can add additional file types for LGTM to extract, by mapping file
       # extensions (including the leading dot) to file types. The usual
