@@ -47,6 +47,17 @@ const sortCardValue = (card1, card2) => {
 	return 0;
 }
 
+function f(x) {
+    switch (x) {
+    case 1:
+    case 2:
+    case3:
+            return true;
+    default:
+            return false;
+    }
+}
+
 const Deck = () => {
 	const [deckInfo, updateDeckInfo] = useState();
 	const [deck, updateDeck] = useState(starter);
