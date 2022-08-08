@@ -59,7 +59,7 @@ extraction:
         - src
       # Specify a list of files and folders to exclude from extraction.
       exclude:
-        - src/components/Deck.js
+      # - src/components/Deck.js
       # You can add additional file types for LGTM to extract, by mapping file
       # extensions (including the leading dot) to file types. The usual
       # include/exclude patterns apply, so, for example, `.jsm` files under
