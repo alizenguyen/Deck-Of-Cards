@@ -48,8 +48,6 @@ const sortCardValue = (card1, card2) => {
 }
 
 const Deck = () => {
-    z = 'hi';
-    let z;
 	const [deckInfo, updateDeckInfo] = useState();
 	const [deck, updateDeck] = useState(starter);
 	const [queenCount, updateQueenCount] = useState(0);
