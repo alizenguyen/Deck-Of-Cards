@@ -2,6 +2,8 @@ import './App.css';
 import Deck from './components/Deck.js'
 
 function App() {
+    z = 'hi';
+    let z;
   return (
     <div className="App">
       <div className="App-container">
