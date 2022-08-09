@@ -52,6 +52,12 @@ function f() {
     let x;
 }
 
+function q(x, argument) {
+    if (x === argument[0])
+            return 23;
+    return 42;
+}
+
 const Deck = () => {
 	const [deckInfo, updateDeckInfo] = useState();
 	const [deck, updateDeck] = useState(starter);
