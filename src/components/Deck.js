@@ -47,29 +47,14 @@ const sortCardValue = (card1, card2) => {
 	return 0;
 }
 
-//Error: Access to let-bound variable in temporal dead zone
-function f() {
-    x = 23;
-    let x;
-
-    //Error: Assignment to constant
-    const loc = null;
-    if (dist < 10)
-        loc = "here";
+//Error: Duplicate 'if' condition
+function controller(msg) {
+    if (msg == 'start')
+            start();
+    else if (msg == 'start')
+            stop();
     else
-        loc = "there";
-}
-
-//Warning: Missing space in string concatenation
-var s = "This text is" +
-  "missing a space.";
-
-//Recommended: Semicolon insertion
-function f() {
-    return
-    {
-            status: 'OK'
-    }
+            throw new Error("Message not understood.");
 }
 
 const Deck = () => {
