@@ -47,14 +47,11 @@ const sortCardValue = (card1, card2) => {
 	return 0;
 }
 
-function f(x) {
-    switch (x) {
-    case 1:
-    case 2:
-    case3:
-            return true;
-    default:
-            return false;
+
+function f() {
+    return
+    {
+            status: 'OK'
     }
 }
 
