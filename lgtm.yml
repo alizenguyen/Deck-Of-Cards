@@ -1,10 +1,7 @@
 queries:
   - exclude: '*'
   - include:
-      tags:
-        - 'security'
-        - 'correctness'
-      severity: 'error'
+      severity: ['error', 'warning']
 
 extraction:
   javascript:
