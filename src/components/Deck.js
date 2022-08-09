@@ -47,16 +47,6 @@ const sortCardValue = (card1, card2) => {
 	return 0;
 }
 
-//Error: Duplicate 'if' condition
-function controller(msg) {
-    if (msg == 'start')
-            start();
-    else if (msg == 'start')
-            stop();
-    else
-            throw new Error("Message not understood.");
-}
-
 //Error: Access to let-bound variable in temporal dead zone
 function f() {
     x = 23;
