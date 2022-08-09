@@ -1,9 +1,9 @@
-queries:
-  - exclude: '*'
-  - include:
-      severity: 'error'
-  - include:
-      severity: 'warning'
+# queries:
+#   - exclude: '*'
+#   - include:
+#       severity: 'error'
+#   - include:
+#       severity: 'warning'
 
 extraction:
   javascript:
