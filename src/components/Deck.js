@@ -59,7 +59,7 @@ function avg(x, y) {
 }
 
 //Recommended: Semicolon insertion
-function f() {
+function q() {
     return
     {
             status: 'OK'
