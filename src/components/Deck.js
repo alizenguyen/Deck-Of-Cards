@@ -47,11 +47,17 @@ const sortCardValue = (card1, card2) => {
 	return 0;
 }
 
+//Error: Access to let-bound variable in temporal dead zone
 function f() {
     x = 23;
     let x;
 }
 
+//Warning: Missing space in string concatenation
+var s = "This text is" +
+  "missing a space.";
+
+//Recommended: Semicolon insertion
 function f() {
     return
     {
