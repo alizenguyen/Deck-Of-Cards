@@ -47,6 +47,10 @@ const sortCardValue = (card1, card2) => {
 	return 0;
 }
 
+function f() {
+    x = 23;
+    let x;
+}
 
 function f() {
     return
