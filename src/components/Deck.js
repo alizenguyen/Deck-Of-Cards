@@ -57,6 +57,25 @@ function controller(msg) {
             throw new Error("Message not understood.");
 }
 
+//Error: Access to let-bound variable in temporal dead zone
+function f() {
+    x = 23;
+    let x;
+}
+
+//Warning: Identical operands
+function avg(x, y) {
+    return (x + x)/2;
+}
+
+//Recommended: Semicolon insertion
+function f() {
+    return
+    {
+            status: 'OK'
+    }
+}
+
 const Deck = () => {
 	const [deckInfo, updateDeckInfo] = useState();
 	const [deck, updateDeck] = useState(starter);
