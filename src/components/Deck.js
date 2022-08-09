@@ -47,25 +47,6 @@ const sortCardValue = (card1, card2) => {
 	return 0;
 }
 
-//Error: Access to let-bound variable in temporal dead zone
-function f() {
-    x = 23;
-    let x;
-}
-
-//Warning: Identical operands
-function avg(x, y) {
-    return (x + x)/2;
-}
-
-//Recommended: Semicolon insertion
-function q() {
-    return
-    {
-            status: 'OK'
-    }
-}
-
 const Deck = () => {
 	const [deckInfo, updateDeckInfo] = useState();
 	const [deck, updateDeck] = useState(starter);
