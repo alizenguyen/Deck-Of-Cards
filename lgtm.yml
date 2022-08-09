@@ -1,7 +1,9 @@
 queries:
   - exclude: '*'
   - include:
-      severity: ['error', 'warning']
+      severity: 'error'
+  - include:
+      severity: 'warning'
 
 extraction:
   javascript:
