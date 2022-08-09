@@ -51,6 +51,13 @@ const sortCardValue = (card1, card2) => {
 function f() {
     x = 23;
     let x;
+
+    //Error: Assignment to constant
+    const loc = null;
+    if (dist < 10)
+        loc = "here";
+    else
+        loc = "there";
 }
 
 //Warning: Missing space in string concatenation
